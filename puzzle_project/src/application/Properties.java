@@ -1,0 +1,6 @@
+package application;
+
+public enum Properties {
+	HORIZONTAL, VERTICAL, NONE, FREE, CURVED_ZERO_ZERO, CURVED_ZERO_ONE, CURVED_ONE_ZERO, CURVED_ONE_ONE
+
+}
