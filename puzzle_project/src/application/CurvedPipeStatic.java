@@ -32,13 +32,11 @@ public class CurvedPipeStatic extends Pipe {
 			previousY = Repository.findXYCoordinate(tile)[1];
 
 			if (thisX > previousX) {// GO TO right up
-				System.out.println("111111111111111111111111111111111111");
 
 				CubicCurveTo curve = new CubicCurveTo(thisX - 50, thisY, thisX, thisY, thisX, thisY - 50);
 
 				Repository.path.getElements().add(curve);
 			} else {// GO TO LEFT
-				System.out.println("222222222222222222222222222222222222222");
 
 				CubicCurveTo curve = new CubicCurveTo(thisX, thisY - 50, thisX, thisY, thisX - 50, thisY);
 				Repository.path.getElements().add(curve);
@@ -69,7 +67,6 @@ public class CurvedPipeStatic extends Pipe {
 				CubicCurveTo curve = new CubicCurveTo(thisX - 50, thisY, thisX, thisY, thisX, thisY + 50);
 				Repository.path.getElements().add(curve);
 			} else {
-				System.out.println("AAAAAA");
 				CubicCurveTo curve = new CubicCurveTo(thisX, thisY + 50, thisX, thisY, thisX - 50, thisY);
 				Repository.path.getElements().add(curve);
 
@@ -80,11 +77,9 @@ public class CurvedPipeStatic extends Pipe {
 			previousX = Repository.findXYCoordinate(tile)[0];
 			previousY = Repository.findXYCoordinate(tile)[1];
 			if (thisY > previousY) {
-				System.out.println("111111111111111111111111111111111111");
 				CubicCurveTo curve = new CubicCurveTo(thisX, thisY + 50, thisX, thisY, thisX + 50, thisY);
 				Repository.path.getElements().add(curve);
 			} else {
-				System.out.println("222222222222222222222222222222222222222");
 
 				CubicCurveTo curve = new CubicCurveTo(thisX + 50, thisY, thisX, thisY, thisX, thisY + 50);
 				Repository.path.getElements().add(curve);
@@ -94,14 +89,16 @@ public class CurvedPipeStatic extends Pipe {
 		default:
 			break;
 		}
-		// Repository.path.getElements().add(new LineTo(50, 250));
 	}
 
 	@Override
 	public boolean isContinue(Tile[][] twoDim, Tile previousTile) {
-		System.out.println("curved static check start");
+
+		System.out.println("curved check start");
+		// TODO Auto-generated method stub
 		Repository.pipeList.add(this);
 		addPath();
+
 		int x = findTileInTwoDim(twoDim, this)[0];
 		int y = findTileInTwoDim(twoDim, this)[1];
 
@@ -115,7 +112,6 @@ public class CurvedPipeStatic extends Pipe {
 					if (secondTile.getPropertiesFromTile() == Properties.HORIZONTAL
 							|| secondTile.getPropertiesFromTile() == Properties.CURVED_ZERO_ONE
 							|| secondTile.getPropertiesFromTile() == Properties.CURVED_ONE_ONE) {
-						System.out.println("CONTİNUEEEEEE");
 						if (!secondTile.getTileId().equals(previousTile.getTileId())) {
 							return secondTile.isContinue(twoDim, this);
 
@@ -132,7 +128,6 @@ public class CurvedPipeStatic extends Pipe {
 					if (secondTile.getPropertiesFromTile() == Properties.VERTICAL
 							|| secondTile.getPropertiesFromTile() == Properties.CURVED_ONE_ZERO
 							|| secondTile.getPropertiesFromTile() == Properties.CURVED_ONE_ONE) {
-						System.out.println("CONTİNUEEEEEE");
 						if (!secondTile.getTileId().equals(previousTile.getTileId())) {
 							return secondTile.isContinue(twoDim, this);
 
@@ -146,7 +141,6 @@ public class CurvedPipeStatic extends Pipe {
 		case CURVED_ZERO_ONE:
 			if (x < 3) {
 				if (Pipe.class.isAssignableFrom(twoDim[y][x + 1].getClass())) {
-					System.out.println("newwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww");
 
 					Pipe secondTile = (Pipe) twoDim[y][x + 1];
 
@@ -155,6 +149,7 @@ public class CurvedPipeStatic extends Pipe {
 							|| secondTile.getPropertiesFromTile() == Properties.CURVED_ONE_ZERO) {
 
 						if (!secondTile.getTileId().equals(previousTile.getTileId())) {
+
 							return secondTile.isContinue(twoDim, this);
 
 						}
@@ -163,7 +158,7 @@ public class CurvedPipeStatic extends Pipe {
 				}
 
 			}
-			if (y > 1) {
+			if (y > 0) {
 
 				if (Pipe.class.isAssignableFrom(twoDim[y - 1][x].getClass())) {
 					Pipe secondTile = (Pipe) twoDim[y - 1][x];
@@ -171,7 +166,7 @@ public class CurvedPipeStatic extends Pipe {
 					if (secondTile.getPropertiesFromTile() == Properties.VERTICAL
 							|| secondTile.getPropertiesFromTile() == Properties.CURVED_ONE_ZERO
 							|| secondTile.getPropertiesFromTile() == Properties.CURVED_ONE_ONE) {
-						System.out.println("CONTİNUEEEEEE");
+
 						if (!secondTile.getTileId().equals(previousTile.getTileId())) {
 							return secondTile.isContinue(twoDim, this);
 
@@ -192,7 +187,6 @@ public class CurvedPipeStatic extends Pipe {
 					if (secondTile.getPropertiesFromTile() == Properties.HORIZONTAL
 							|| secondTile.getPropertiesFromTile() == Properties.CURVED_ZERO_ONE
 							|| secondTile.getPropertiesFromTile() == Properties.CURVED_ONE_ONE) {
-						System.out.println("CONTİNUEEEEEE");
 						if (!secondTile.getTileId().equals(previousTile.getTileId())) {
 							return secondTile.isContinue(twoDim, this);
 
@@ -208,7 +202,6 @@ public class CurvedPipeStatic extends Pipe {
 					if (secondTile.getPropertiesFromTile() == Properties.VERTICAL
 							|| secondTile.getPropertiesFromTile() == Properties.CURVED_ZERO_ZERO
 							|| secondTile.getPropertiesFromTile() == Properties.CURVED_ZERO_ONE) {
-						System.out.println("CONTİNUEEEEEE");
 						if (!secondTile.getTileId().equals(previousTile.getTileId())) {
 							return secondTile.isContinue(twoDim, this);
 
@@ -228,7 +221,6 @@ public class CurvedPipeStatic extends Pipe {
 					if (secondTile.getPropertiesFromTile() == Properties.HORIZONTAL
 							|| secondTile.getPropertiesFromTile() == Properties.CURVED_ZERO_ZERO
 							|| secondTile.getPropertiesFromTile() == Properties.CURVED_ONE_ZERO) {
-						System.out.println("CONTİNUEEEEEE");
 						if (!secondTile.getTileId().equals(previousTile.getTileId())) {
 							return secondTile.isContinue(twoDim, this);
 
@@ -244,7 +236,6 @@ public class CurvedPipeStatic extends Pipe {
 					if (secondTile.getPropertiesFromTile() == Properties.VERTICAL
 							|| secondTile.getPropertiesFromTile() == Properties.CURVED_ZERO_ZERO
 							|| secondTile.getPropertiesFromTile() == Properties.CURVED_ZERO_ONE) {
-						System.out.println("CONTİNUEEEEEE");
 						if (!secondTile.getTileId().equals(previousTile.getTileId())) {
 							return secondTile.isContinue(twoDim, this);
 

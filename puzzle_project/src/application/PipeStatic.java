@@ -59,9 +59,10 @@ public class PipeStatic extends Pipe {
 					if (secondTile.getPropertiesFromTile() == Properties.CURVED_ZERO_ZERO
 							|| secondTile.getPropertiesFromTile() == Properties.CURVED_ONE_ZERO
 							|| secondTile.getPropertiesFromTile() == Properties.HORIZONTAL) {
-						System.out.println("CONTİNUEEEEEE");
-						return secondTile.isContinue(twoDim, this);
+						if (!secondTile.getTileId().equals(previousTile.getTileId())) {
+							return secondTile.isContinue(twoDim, this);
 
+						}
 					}
 				}
 				return false;
@@ -73,9 +74,10 @@ public class PipeStatic extends Pipe {
 					if (secondTile.getPropertiesFromTile() == Properties.CURVED_ZERO_ONE
 							|| secondTile.getPropertiesFromTile() == Properties.CURVED_ONE_ONE
 							|| secondTile.getPropertiesFromTile() == Properties.HORIZONTAL) {
-						System.out.println("CONTİNUEEEEEE");
-						return secondTile.isContinue(twoDim, this);
+						if (!secondTile.getTileId().equals(previousTile.getTileId())) {
+							return secondTile.isContinue(twoDim, this);
 
+						}
 					}
 				}
 				return false;
@@ -120,9 +122,10 @@ public class PipeStatic extends Pipe {
 					if (secondTile.getPropertiesFromTile() == Properties.CURVED_ZERO_ZERO
 							|| secondTile.getPropertiesFromTile() == Properties.CURVED_ZERO_ONE
 							|| secondTile.getPropertiesFromTile() == Properties.VERTICAL) {
-						System.out.println("CONTİNUEEEEEE");
-						return secondTile.isContinue(twoDim, this);
+						if (!secondTile.getTileId().equals(previousTile.getTileId())) {
+							return secondTile.isContinue(twoDim, this);
 
+						}
 					}
 				}
 				return false;
@@ -135,9 +138,10 @@ public class PipeStatic extends Pipe {
 					if (secondTile.getPropertiesFromTile() == Properties.CURVED_ONE_ZERO
 							|| secondTile.getPropertiesFromTile() == Properties.CURVED_ONE_ONE
 							|| secondTile.getPropertiesFromTile() == Properties.VERTICAL) {
-						System.out.println("CONTİNUEEEEEE");
-						return secondTile.isContinue(twoDim, this);
+						if (!secondTile.getTileId().equals(previousTile.getTileId())) {
+							return secondTile.isContinue(twoDim, this);
 
+						}
 					}
 				}
 				return false;
@@ -151,8 +155,6 @@ public class PipeStatic extends Pipe {
 					if (secondTile.getPropertiesFromTile() == Properties.CURVED_ZERO_ZERO
 							|| secondTile.getPropertiesFromTile() == Properties.CURVED_ZERO_ONE
 							|| secondTile.getPropertiesFromTile() == Properties.VERTICAL) {
-						System.out.println("CONTİNUEEEEEE 1111");
-						System.out.println(secondTile);
 
 						if (!secondTile.getTileId().equals(previousTile.getTileId())) {
 							return secondTile.isContinue(twoDim, this);
@@ -167,7 +169,6 @@ public class PipeStatic extends Pipe {
 					if (secondTile.getPropertiesFromTile() == Properties.CURVED_ONE_ZERO
 							|| secondTile.getPropertiesFromTile() == Properties.CURVED_ONE_ONE
 							|| secondTile.getPropertiesFromTile() == Properties.VERTICAL) {
-						System.out.println("CONTİNUEEEEEE");
 
 						if (!secondTile.getTileId().equals(previousTile.getTileId())) {
 							return secondTile.isContinue(twoDim, this);

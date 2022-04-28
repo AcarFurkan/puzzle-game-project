@@ -1,6 +1,6 @@
 package application.Abstract;
 
-abstract public class Pipe extends Visual {
+abstract public class Pipe extends Tile {
 
 	public Pipe(String id, String type, String property, String path) {
 		super(id, type, property, path);

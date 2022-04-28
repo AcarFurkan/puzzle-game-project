@@ -35,7 +35,6 @@ public class Repository {
 		int y = (findTileInTwoDim(twoDim, tile)[1] * 100 + 50);
 		coordinates[0] = x;
 		coordinates[1] = y;
-		System.out.println(x + "--" + y);
 		return coordinates;
 	}
 }
