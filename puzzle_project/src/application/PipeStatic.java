@@ -29,9 +29,9 @@ public class PipeStatic extends Pipe {
 			break;
 		case VERTICAL:
 			if (thisY > previousY) {
-				Repository.path.getElements().add(new LineTo(thisX, thisY - 50));
-			} else {
 				Repository.path.getElements().add(new LineTo(thisX, thisY + 50));
+			} else {
+				Repository.path.getElements().add(new LineTo(thisX, thisY - 50));
 			}
 			break;
 		default:

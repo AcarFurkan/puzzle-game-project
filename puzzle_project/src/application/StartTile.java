@@ -17,23 +17,6 @@ public class StartTile extends Pipe {
 		// TODO Auto-generated constructor stub
 	}
 
-	public int[] findTileInTwoDim(Tile[][] list, Tile tile) {
-		int[] positions = new int[2];
-
-		for (int i = 0; i < list.length; i++) {
-			for (int j = 0; j < list[i].length; j++) {
-				if (list[i][j].getTileId().equals(tile.getTileId())) {
-					positions[0] = j;
-					positions[1] = i;
-					return positions;
-				}
-
-			}
-		}
-		return positions;
-
-	}
-
 	@Override
 	public String toString() {
 		return "StartTile [getTileId()=" + getTileId() + ", getTypes()=" + getTypes() + ", getPropertiesFromTile()="
@@ -63,42 +46,12 @@ public class StartTile extends Pipe {
 
 		Repository.pipeList.add(this);
 		addPath();
-		int x = findTileInTwoDim(twoDim, this)[0];
-		int y = findTileInTwoDim(twoDim, this)[1];
+		int x = Repository.findTileInTwoDim(twoDim, this)[0];
+		int y = Repository.findTileInTwoDim(twoDim, this)[1];
 		switch (this.getPropertiesFromTile()) {
 
 		case HORIZONTAL:
 
-			if (x == 1 && y == 0) {
-				if (Pipe.class.isAssignableFrom(twoDim[y][x + 1].getClass())) {
-					Pipe secondTile = (Pipe) twoDim[y][x + 1];
-
-					if (secondTile.getPropertiesFromTile() == Properties.CURVED_ZERO_ZERO
-							|| secondTile.getPropertiesFromTile() == Properties.CURVED_ONE_ZERO
-							|| secondTile.getPropertiesFromTile() == Properties.HORIZONTAL) {
-						return secondTile.isContinue(twoDim, this);
-
-					} else {
-						return false;
-					}
-				}
-
-			}
-			if (x == 1 && y == 1) {
-				if (Pipe.class.isAssignableFrom(twoDim[y][x + 1].getClass())) {
-					Pipe secondTile = (Pipe) twoDim[y][x + 1];
-
-					if (secondTile.getPropertiesFromTile() == Properties.CURVED_ZERO_ZERO
-							|| secondTile.getPropertiesFromTile() == Properties.CURVED_ONE_ZERO
-							|| secondTile.getPropertiesFromTile() == Properties.HORIZONTAL) {
-						return secondTile.isContinue(twoDim, this);
-
-					} else {
-						return false;
-					}
-				}
-
-			}
 			if (Pipe.class.isAssignableFrom(twoDim[y][x + 1].getClass())) {
 				Pipe secondTile = (Pipe) twoDim[y][x + 1];
 
@@ -119,6 +72,7 @@ public class StartTile extends Pipe {
 				if (secondTile.getPropertiesFromTile() == Properties.CURVED_ZERO_ONE
 						|| secondTile.getPropertiesFromTile() == Properties.CURVED_ZERO_ZERO
 						|| secondTile.getPropertiesFromTile() == Properties.VERTICAL) {
+
 					return secondTile.isContinue(twoDim, this);
 
 				} else {

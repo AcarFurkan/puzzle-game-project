@@ -58,12 +58,10 @@ public class EndTile extends Pipe {
 
 		case HORIZONTAL:
 			if (Pipe.class.isAssignableFrom(twoDim[y][x - 1].getClass())) {
-				// Pipe previousTile = (Pipe) twoDim[y][x - 1];
 
 				if (previousTile.getPropertiesFromTile() == Properties.CURVED_ONE_ONE
 						|| previousTile.getPropertiesFromTile() == Properties.CURVED_ZERO_ONE
 						|| previousTile.getPropertiesFromTile() == Properties.HORIZONTAL) {
-					System.out.println("COMPLETED");
 					return true;
 
 				}
@@ -71,15 +69,12 @@ public class EndTile extends Pipe {
 
 			return false;
 		case VERTICAL:
-			System.out.println("111111111111111111111111111111111111111111111111111");
 
 			if (Pipe.class.isAssignableFrom(twoDim[y + 1][x].getClass())) {
 				// Pipe previousTile = (Pipe) twoDim[y + 1][x];
-				System.out.println("222222222222");
 				if (previousTile.getPropertiesFromTile() == Properties.CURVED_ZERO_ONE
 						|| previousTile.getPropertiesFromTile() == Properties.CURVED_ZERO_ZERO
 						|| previousTile.getPropertiesFromTile() == Properties.VERTICAL) {
-					System.out.println("COMPLETED");
 					return true;
 
 				}

@@ -13,8 +13,6 @@ abstract public class Tile extends ImageView {
 	private Types type;
 	private Properties property;
 	public String path;
-	public int positionX;
-	public int positionY;
 
 	public Tile(String id, String type, String property, String path) {
 		super();
@@ -22,7 +20,6 @@ abstract public class Tile extends ImageView {
 		this.propertyNormal = property;
 		this.typeNormal = type;
 		setTileId(id);
-		setPostionById();
 		setTypes(type);
 		setProperties(property);
 
@@ -49,96 +46,6 @@ abstract public class Tile extends ImageView {
 			return true;
 		}
 		return false;
-	}
-
-	public void setPostionById() {
-		switch (getTileId()) {
-		case "1":
-			positionX = 0;
-			positionY = 0;
-
-			break;
-		case "2":
-			positionX = 1;
-			positionY = 0;
-
-			break;
-		case "3":
-			positionX = 2;
-			positionY = 0;
-
-			break;
-		case "4":
-			positionX = 3;
-			positionY = 0;
-
-			break;
-		case "5":
-			positionX = 0;
-			positionY = 1;
-
-			break;
-		case "6":
-			positionX = 1;
-			positionY = 1;
-
-			break;
-		case "7":
-			positionX = 2;
-			positionY = 1;
-
-			break;
-		case "8":
-			positionX = 3;
-			positionY = 1;
-
-			break;
-		case "9":
-			positionX = 0;
-			positionY = 2;
-
-			break;
-		case "10":
-			positionX = 1;
-			positionY = 2;
-
-			break;
-		case "11":
-			positionX = 2;
-			positionY = 2;
-
-			break;
-		case "12":
-			positionX = 3;
-			positionY = 2;
-
-			break;
-		case "13":
-			positionX = 0;
-			positionY = 3;
-
-			break;
-		case "14":
-			positionX = 1;
-			positionY = 3;
-
-			break;
-		case "15":
-			positionX = 2;
-			positionY = 3;
-
-			break;
-		case "16":
-			positionX = 3;
-			positionY = 3;
-
-			break;
-
-		default:
-			positionX = 0;
-			positionY = 0;
-			break;
-		}
 	}
 
 	public Tile(Tile tile) {

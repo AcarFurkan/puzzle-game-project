@@ -29,9 +29,9 @@ public class PipeTile extends Pipe implements Movable {
 			break;
 		case VERTICAL:
 			if (thisY > previousY) {
-				Repository.path.getElements().add(new LineTo(thisX, thisY - 50));
-			} else {
 				Repository.path.getElements().add(new LineTo(thisX, thisY + 50));
+			} else {
+				Repository.path.getElements().add(new LineTo(thisX, thisY - 50));
 			}
 			break;
 		default:
@@ -45,8 +45,8 @@ public class PipeTile extends Pipe implements Movable {
 		System.out.println("pipe tile check start");
 		Repository.pipeList.add(this);
 		addPath();
-		int x = findTileInTwoDim(twoDim, this)[0];
-		int y = findTileInTwoDim(twoDim, this)[1];
+		int x = Repository.findTileInTwoDim(twoDim, this)[0];
+		int y = Repository.findTileInTwoDim(twoDim, this)[1];
 		switch (this.getPropertiesFromTile()) {
 
 		case HORIZONTAL:
@@ -139,7 +139,6 @@ public class PipeTile extends Pipe implements Movable {
 							|| secondTile.getPropertiesFromTile() == Properties.VERTICAL) {
 						if (!secondTile.getTileId().equals(previousTile.getTileId())) {
 							return secondTile.isContinue(twoDim, this);
-
 						}
 					}
 				}
@@ -184,23 +183,6 @@ public class PipeTile extends Pipe implements Movable {
 			return false;
 
 		}
-	}
-
-	public int[] findTileInTwoDim(Tile[][] list, Tile tile) {
-		int[] positions = new int[2];
-
-		for (int i = 0; i < list.length; i++) {
-			for (int j = 0; j < list[i].length; j++) {
-				if (list[i][j].getTileId().equals(tile.getTileId())) {
-					positions[0] = j;
-					positions[1] = i;
-					return positions;
-				}
-
-			}
-		}
-		return positions;
-
 	}
 
 }

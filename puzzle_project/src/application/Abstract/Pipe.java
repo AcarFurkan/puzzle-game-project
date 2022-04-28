@@ -9,6 +9,8 @@ abstract public class Pipe extends Tile {
 
 	abstract public boolean isContinue(Tile[][] twoDim, Tile previousTile);
 
+	abstract public void addPath();
+
 	public Pipe(Pipe pipe) {
 		super(pipe);
 		// TODO Auto-generated constructor stub

@@ -12,6 +12,7 @@ public class CurvedPipe extends Pipe implements Movable {
 		// TODO Auto-generated constructor stub
 	}
 
+	@Override
 	public void addPath() {
 		int thisX = Repository.findXYCoordinate(this)[0];
 		int thisY = Repository.findXYCoordinate(this)[1];

@@ -1,9 +1,6 @@
 package application;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList; // import the ArrayList class
-import java.util.Scanner;
 
 import application.Abstract.Movable;
 import application.Abstract.Tile;
@@ -27,6 +24,7 @@ public class Main extends Application {// ADDPATH İ PİPE IN İÇNE KOY
 	Tile objectForMove = null;
 	PathTransition pathTransition = new PathTransition();
 	final int duration = 1250;
+	int numberMovement = 0;
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -35,7 +33,7 @@ public class Main extends Application {// ADDPATH İ PİPE IN İÇNE KOY
 		ArrayList<Tile> tileListCopy = new ArrayList<Tile>();
 		Tile[][] twoDim = Repository.twoDim;
 
-		readFromFile(tileList);
+		Helper.readFromFile(tileList);
 
 		tileList.forEach((e) -> {
 			tileListCopy.add(Helper.generateTilesFromTile(e));
@@ -55,11 +53,13 @@ public class Main extends Application {// ADDPATH İ PİPE IN İÇNE KOY
 				for (int j = 0; j < twoDim[i].length; j++) {
 					Tile tile = twoDim[i][j];
 					tile.setOnMouseReleased((event) -> {
+						System.out.println("releaseed");
+
 						objectForMove = tile;
 					});
 
 					tile.setOnMouseEntered((event) -> {
-
+						System.out.println("entered");
 						moveTiles(tileList, twoDim, tile);
 
 					});
@@ -76,6 +76,82 @@ public class Main extends Application {// ADDPATH İ PİPE IN İÇNE KOY
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	private void moveTiles(ArrayList<Tile> tileList, Tile[][] twoDim, Tile tile) {
+		int xOfTarget = Repository.findTileInTwoDim(twoDim, tile)[0];
+		int yOfTarget = Repository.findTileInTwoDim(twoDim, tile)[1];
+
+		if (objectForMove != null) {
+
+			int xOfOrigin = Repository.findTileInTwoDim(twoDim, objectForMove)[0];
+			int yOfOrigin = Repository.findTileInTwoDim(twoDim, objectForMove)[1];
+
+			if (((Movable.class.isAssignableFrom(tile.getClass()))
+					&& (Movable.class.isAssignableFrom(objectForMove.getClass())))
+					&& EmptyFreeTile.class.isAssignableFrom(tile.getClass())
+					&& (!(Math.abs(xOfTarget - xOfOrigin) == 1 && Math.abs(yOfTarget - yOfOrigin) == 1))
+					&& (!((Math.abs(xOfTarget - xOfOrigin) > 1) || (Math.abs(yOfTarget - yOfOrigin) > 1)))) {
+
+				System.out.println(++numberMovement);
+
+				if (xOfTarget > xOfOrigin) {
+					objectForMove.goToRight();
+					tile.goToLeft();
+
+					changePositionOfTwoObjectInList(twoDim, objectForMove, tile);
+
+				} else if (xOfTarget < xOfOrigin) {
+
+					tile.goToRight();
+					objectForMove.goToLeft();
+					changePositionOfTwoObjectInList(twoDim, objectForMove, tile);
+
+				}
+				if (yOfTarget < yOfOrigin) {
+					objectForMove.goToUp();
+					tile.goToDown();
+					changePositionOfTwoObjectInList(twoDim, objectForMove, tile);
+
+				} else if (yOfTarget > yOfOrigin) {
+
+					tile.goToUp();
+					objectForMove.goToDown();
+					changePositionOfTwoObjectInList(twoDim, objectForMove, tile);
+
+				}
+
+				objectForMove = null;
+
+				checkIsGameDone(tileList, twoDim);
+
+			} else {
+				objectForMove = null;
+
+			}
+
+		}
+	}
+
+	private void checkIsGameDone(ArrayList<Tile> tileList, Tile[][] twoDim) {
+		tileList.forEach((e) -> {
+			if (e.getTypes() == application.Types.STARTER) {
+
+				boolean isCompleted = ((StartTile) e).isContinue(twoDim, null);
+				if (isCompleted) {
+					pathTransition.setPath(Repository.path);
+					pathTransition.play();
+					Repository.pipeList.clear();
+					Repository.path.getElements().clear();
+
+				} else {
+
+					Repository.pipeList.clear();
+					Repository.path.getElements().clear();
+				}
+//										 
+			}
+		});
 	}
 
 	public Circle createCircle() {
@@ -100,83 +176,6 @@ public class Main extends Application {// ADDPATH İ PİPE IN İÇNE KOY
 		return circle;
 	}
 
-	private void moveTiles(ArrayList<Tile> tileList, Tile[][] twoDim, Tile tile) {
-		int xOfTarget = findTileInTwoDim(twoDim, tile)[0];
-		int yOfTarget = findTileInTwoDim(twoDim, tile)[1];
-
-		if (objectForMove != null) {
-
-			int xOfOrigin = findTileInTwoDim(twoDim, objectForMove)[0];
-			int yOfOrigin = findTileInTwoDim(twoDim, objectForMove)[1];
-
-			if (((Movable.class.isAssignableFrom(tile.getClass()))
-					&& (Movable.class.isAssignableFrom(objectForMove.getClass())))
-					&& EmptyFreeTile.class.isAssignableFrom(tile.getClass())
-					&& (!(Math.abs(xOfTarget - xOfOrigin) == 1 && Math.abs(yOfTarget - yOfOrigin) == 1))
-					&& (!((Math.abs(xOfTarget - xOfOrigin) > 1) || (Math.abs(yOfTarget - yOfOrigin) > 1)))) {
-
-				if (xOfTarget > xOfOrigin) {
-					objectForMove.goToRight();
-					tile.goToLeft();
-					changePositionOfTwoObjectInList(twoDim, objectForMove, tile);
-
-					updatePosition(tile, objectForMove);
-
-				} else if (xOfTarget < xOfOrigin) {
-
-					tile.goToRight();
-					objectForMove.goToLeft();
-					changePositionOfTwoObjectInList(twoDim, objectForMove, tile);
-					updatePosition(tile, objectForMove);
-
-				}
-				if (yOfTarget < yOfOrigin) {
-					objectForMove.goToUp();
-					tile.goToDown();
-					changePositionOfTwoObjectInList(twoDim, objectForMove, tile);
-					updatePosition(tile, objectForMove);
-
-				} else if (yOfTarget > yOfOrigin) {
-					tile.goToUp();
-					objectForMove.goToDown();
-					changePositionOfTwoObjectInList(twoDim, objectForMove, tile);
-					updatePosition(tile, objectForMove);
-
-				}
-
-				assignObjectFormove(null);
-
-				tileList.forEach((e) -> {
-					if (e.getTypes() == application.Types.STARTER) {
-
-						boolean isContinue = ((StartTile) e).isContinue(twoDim, null);
-						if (isContinue) {
-							int[] pos = Repository.findXYCoordinate(e);
-
-							pathTransition.setPath(Repository.path);
-							pathTransition.play();
-							Repository.pipeList.clear();
-							Repository.path.getElements().clear();
-
-						} else {
-
-							Repository.pipeList.clear();
-							Repository.path.getElements().clear();
-						}
-//										 
-					}
-				});
-
-				checkGameCompleted();
-
-			} else {
-				assignObjectFormove(null);
-
-			}
-
-		}
-	}
-
 	private void printTwoDimArray(Tile[][] twoDim) {
 		int count = 1;
 		for (Tile[] tiles : twoDim) {
@@ -187,50 +186,17 @@ public class Main extends Application {// ADDPATH İ PİPE IN İÇNE KOY
 		}
 	}
 
-	private void checkGameCompleted() {
-		System.out.println("game completed");
-		// TODO Auto-generated method stub
-
-	}
-
 	public void changePositionOfTwoObjectInList(Tile[][] list, Tile to, Tile from) {
-		int tempToX = findTileInTwoDim(list, to)[0];
-		int tempToY = findTileInTwoDim(list, to)[1];
-		int tempFromX = findTileInTwoDim(list, from)[0];
-		int tempFromY = findTileInTwoDim(list, from)[1];
+		int tempToX = Repository.findTileInTwoDim(list, to)[0];
+		int tempToY = Repository.findTileInTwoDim(list, to)[1];
+		int tempFromX = Repository.findTileInTwoDim(list, from)[0];
+		int tempFromY = Repository.findTileInTwoDim(list, from)[1];
 
 		Tile toCopy = Helper.generateTilesFromTile(to);
 		Tile fromCopy = Helper.generateTilesFromTile(from);
 
 		list[tempToY][tempToX] = fromCopy;
 		list[tempFromY][tempFromX] = toCopy;
-
-	}
-
-	public void updatePosition(Tile to, Tile from) {
-		int tempToX = to.positionX;
-		int tempToY = to.positionY;
-		to.positionX = from.positionX;
-		to.positionY = from.positionY;
-		from.positionX = tempToX;
-		from.positionY = tempToY;
-
-	}
-
-	public int[] findTileInTwoDim(Tile[][] list, Tile tile) {
-		int[] positions = new int[2];
-
-		for (int i = 0; i < list.length; i++) {
-			for (int j = 0; j < list[i].length; j++) {
-				if (list[i][j].getTileId().equals(tile.getTileId())) {
-					positions[0] = j;
-					positions[1] = i;
-					return positions;
-				}
-
-			}
-		}
-		return positions;
 
 	}
 
@@ -259,43 +225,6 @@ public class Main extends Application {// ADDPATH İ PİPE IN İÇNE KOY
 		Background background2 = new Background(new BackgroundImage(img2, BackgroundRepeat.NO_REPEAT,
 				BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT));
 		root.setBackground(background2);
-	}
-
-	private void readFromFile(ArrayList<Tile> tileList) {
-		try {
-			File directoryPath = new File("levels");
-			// List of all files and directories
-			String contents[] = directoryPath.list();
-			System.out.println("List of files and directories in the specified directory:");
-			for (String string : contents) {
-				System.out.println(string);
-
-			}
-			for (int i = 9; i < 10; i++) {
-
-				System.out.println("levels/" + contents[i]);
-				File myObj = new File("levels/" + contents[i]);
-
-				Scanner myReader = new Scanner(myObj);
-				while (myReader.hasNextLine()) {
-
-					String data = myReader.nextLine();
-					data = data.replaceAll("\\s", "");
-					if (data.equals("")) {
-						data = "";
-					} else {
-						String[] list = data.trim().split(",");
-						tileList.add(Helper.generateTiles(list));
-
-					}
-				}
-				myReader.close();
-			}
-
-		} catch (FileNotFoundException e) {
-			System.out.println("An error occurred.");
-			e.printStackTrace();
-		}
 	}
 
 	public static void main(String[] args) {
