@@ -26,10 +26,6 @@ abstract public class Tile extends ImageView {
 		setImage(path);
 
 		super.setImage(getImageFromVisual());
-		if (this.getTypes() == Types.STARTER && this.getPropertiesFromTile() == Properties.HORIZONTAL) {
-			super.setRotate(180);
-
-		}
 
 		super.setFitHeight(100);
 		super.setFitWidth(100);

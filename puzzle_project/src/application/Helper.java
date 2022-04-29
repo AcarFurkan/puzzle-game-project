@@ -16,11 +16,12 @@ public class Helper {
 			// List of all files and directories
 			String contents[] = directoryPath.list();
 			System.out.println("List of files and directories in the specified directory:");
+			System.out.println(contents.length);
 			for (String string : contents) {
 				System.out.println(string);
 
 			}
-			for (int i = 4; i < 5; i++) {
+			for (int i = 16; i < 17; i++) {
 
 				System.out.println("levels/" + contents[i]);
 				File myObj = new File("levels/" + contents[i]);

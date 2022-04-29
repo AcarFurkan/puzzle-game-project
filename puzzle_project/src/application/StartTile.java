@@ -30,7 +30,7 @@ public class StartTile extends Pipe {
 
 		switch (this.getPropertiesFromTile()) {
 		case HORIZONTAL:
-			Repository.path.getElements().add(new LineTo(thisX + 50, thisY));
+			Repository.path.getElements().add(new LineTo(thisX - 50, thisY));
 			break;
 		case VERTICAL:
 			Repository.path.getElements().add(new LineTo(thisX, thisY + 50));
@@ -52,8 +52,8 @@ public class StartTile extends Pipe {
 
 		case HORIZONTAL:
 
-			if (Pipe.class.isAssignableFrom(twoDim[y][x + 1].getClass())) {
-				Pipe secondTile = (Pipe) twoDim[y][x + 1];
+			if (Pipe.class.isAssignableFrom(twoDim[y][x - 1].getClass())) {
+				Pipe secondTile = (Pipe) twoDim[y][x - 1];
 
 				if (secondTile.getPropertiesFromTile() == Properties.CURVED_ZERO_ZERO
 						|| secondTile.getPropertiesFromTile() == Properties.CURVED_ONE_ZERO
